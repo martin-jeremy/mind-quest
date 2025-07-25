@@ -10,7 +10,7 @@ LOG_FILE = os.path.join(LOG_DIR, "server.log")
 
 # config
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[
         RotatingFileHandler(LOG_FILE, maxBytes=10_000_000, backupCount=3),

@@ -25,7 +25,7 @@ def create_user(user_in: UserCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(user)
     logger.info(f"Created user {user_in.email}")
-    logger.debug(f"User {user_in.id} added in database")
+    logger.debug(f"User {user.id} added in database")
 
     return user
 
