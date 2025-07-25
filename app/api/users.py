@@ -1,10 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.models.user import User
 from app.schemas.user import UserCreate, UserResponse
 from app.core.security import hash_pwd
 from app.logging_config import logger
+from typing import List
 
 router = APIRouter()
 
@@ -27,3 +28,16 @@ def create_user(user_in: UserCreate, db: Session = Depends(get_db)):
     logger.debug(f"User {user_in.id} added in database")
 
     return user
+
+
+@router.get("/users", response_model=List[UserResponse])
+def list_users(
+        skip: int = Query(0, ge=0),
+        limit: int = Query(100, ge=1, le=100),
+        db: Session = Depends(get_db)
+):
+    logger.info(f"Listing users {skip}/{limit}")
+    users = db.query(User).offset(skip).limit(limit).all()
+    logger.info(f"Found {len(users)} users")
+
+    return users
