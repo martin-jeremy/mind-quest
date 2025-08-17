@@ -9,7 +9,8 @@ from typing import List
 
 router = APIRouter()
 
-@router.post("/users", response_model=UserResponse, status_code=201)
+
+@router.post("/", response_model=UserResponse, status_code=201)
 def create_user(user_in: UserCreate, db: Session = Depends(get_db)):
     # check if email is already known
     logger.info(f"Creating user {user_in.email}")
@@ -30,7 +31,7 @@ def create_user(user_in: UserCreate, db: Session = Depends(get_db)):
     return user
 
 
-@router.get("/users", response_model=List[UserResponse])
+@router.get("/", response_model=List[UserResponse])
 def list_users(
         skip: int = Query(0, ge=0),
         limit: int = Query(100, ge=1, le=100),

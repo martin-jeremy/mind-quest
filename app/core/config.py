@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     APP_NAME: str = "MindQuest API"
     DEBUG: bool = True
     DATABASE_URL: PostgresDsn
-    SECRET_KEY: str = ''
+    SECRET_KEY: str = Field('', env='SECRET_KEY')
     ACCESS_TOKEN_EXPIRE_MINUTES: int = Field(60, env="ACCESS_TOKEN_EXPIRE_MINUTES")
 
     class Config:
